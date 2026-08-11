@@ -10,27 +10,46 @@ public abstract class NaveEspacial {
     protected double capacidadCombustible;
 
     public NaveEspacial(String matricula, String modelo, double combustibleInicial, double capacidadCombustible) throws AstreaException {
-        // TODO: Implementar validaciones y asignación
+        if (capacidadCombustible < 0) {
+            throw new AstreaException("La capacidad de combustible no puede ser negativa.");
+        }
+        if (combustibleInicial < 0) {
+            throw new AstreaException("El combustible inicial no puede ser negativo.");
+        }
+        if (combustibleInicial > capacidadCombustible) {
+            throw new AstreaException("El combustible inicial no puede exceder la capacidad de combustible.");
+        }
+
+        this.matricula = matricula;
+        this.modelo = modelo;
+        this.combustible = combustibleInicial;
+        this.capacidadCombustible = capacidadCombustible;
     }
 
     public void repostarCombustible(double cantidad) throws AstreaException {
-        // TODO: Implementar lógica
+        if (cantidad < 0) {
+            throw new AstreaException("La cantidad a repostar no puede ser negativa.");
+        }
+        if (combustible + cantidad > capacidadCombustible) {
+            throw new AstreaException("El repostaje excede la capacidad de combustible de la nave.");
+        }
+        combustible += cantidad;
     }
 
     public String getMatricula() {
-        return null; // TODO: Implementar
+        return matricula;
     }
 
     public String getModelo() {
-        return null; // TODO: Implementar
+        return modelo;
     }
 
     public double getCombustible() {
-        return 0.0; // TODO: Implementar
+        return combustible;
     }
 
     public double getCapacidadCombustible() {
-        return 0.0; // TODO: Implementar
+        return capacidadCombustible;
     }
 
     public abstract void viajar(double distanciaAniosLuz) throws CombustibleInsuficienteException, AstreaException;
